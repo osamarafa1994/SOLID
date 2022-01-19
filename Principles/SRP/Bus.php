@@ -29,17 +29,13 @@ class Bus
      */
     private $maximumSpeed;
     /**
-     * @var string
-     */
-    private $driverName;
-    /**
-     * @var int
-     */
-    private $driverAge;
-    /**
      * @var int
      */
     private $doors;
+    /**
+     * @var Driver
+     */
+    private $driver;
     /**
      * @var array 
      */
@@ -86,7 +82,7 @@ class Bus
      */
     public function getMaximumSpeed(): string
     {
-        return $this->maximumSpeed. " KM/H";
+        return $this->maximumSpeed. " K/H";
     }
 
     /**
@@ -95,38 +91,6 @@ class Bus
     public function setMaximumSpeed(int $maximumSpeed): void
     {
         $this->maximumSpeed = $maximumSpeed;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDriverName(): string
-    {
-        return $this->driverName;
-    }
-
-    /**
-     * @param string $driverName
-     */
-    public function setDriverName(string $driverName): void
-    {
-        $this->driverName = $driverName;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDriverAge(): int
-    {
-        return $this->driverAge;
-    }
-
-    /**
-     * @param int $driverAge
-     */
-    public function setDriverAge(int $driverAge): void
-    {
-        $this->driverAge = $driverAge;
     }
 
     /**
@@ -146,6 +110,22 @@ class Bus
     }
 
     /**
+     * @return Driver
+     */
+    public function getDriver(): Driver
+    {
+        return $this->driver;
+    }
+
+    /**
+     * @param Driver $driver
+     */
+    public function setDriver(Driver $driver): void
+    {
+        $this->driver = $driver;
+    }
+
+    /**
      * @return array
      */
     public function getRoutes(): array
@@ -154,11 +134,11 @@ class Bus
     }
 
     /**
-     * @param array $routes
+     * @param Route $route
      */
-    public function setRoutes(array $routes): void
+    public function addRoute(Route $route): void
     {
-        $this->routes = $routes;
+        $this->routes[] = $route;
     }
 
     /**
@@ -175,5 +155,20 @@ class Bus
     public function setBusNumber($busNumber): void
     {
         $this->busNumber = $busNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function move() : string
+    {
+        $movementDestinations = '';
+        foreach ($this->getRoutes() as $route){
+            $movementDestinations .= "<p>I am moving now from ". $route->getSource().
+                " to ".$route->getDestination()." with maximum Speed ". $this->getMaximumSpeed().
+                ". The Bus Driver name is ". $this->getDriver()->getName()
+                ."</p>";
+        }
+        return $movementDestinations;
     }
 }
